@@ -220,6 +220,25 @@ export default [
     component: Main,
     children: [
       {
+        path: 'users',
+        name: 'users',
+        meta: {
+          icon: 'person-stalker',
+          title: '用户管理'
+        },
+        component: () => import('@/view/acl/user/users.vue')
+      },
+      {
+        path: 'user-info',
+        name: 'user-info',
+        meta: {
+          icon: 'person-stalker',
+          title: '用户详情',
+          hideInMenu: true
+        },
+        component: () => import('@/view/acl/user/user-info.vue')
+      }, 
+      {
         path: 'level_2_1',
         name: 'level_2_1',
         meta: {
