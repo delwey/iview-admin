@@ -220,6 +220,15 @@ export default [
     component: Main,
     children: [
       {
+        path: 'resources',
+        name: 'resources',
+        meta: {
+          icon: 'person-stalker',
+          title: '菜单管理'
+        },
+        component: () => import('@/view/acl/resource/resources.vue')
+      },
+      {
         path: 'users',
         name: 'users',
         meta: {

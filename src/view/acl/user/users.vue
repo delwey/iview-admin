@@ -8,7 +8,6 @@
         <Button type="primary" @click="handleAdd">添加</Button>
       </Col>
     </Row>
-    <br>
     <Row>
       <Col span="24">
         <Table border :columns="columns7" :data="pages.rows"></Table>
