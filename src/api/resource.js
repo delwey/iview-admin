@@ -1,10 +1,9 @@
 import axios from '@/libs/api.request'
 
-export const getTree = () => {
+export const getTree = (roleId) => {
   return axios.request({
     url: '/acl/resource/getTree',
-    params: {
-    },
+    params: {roleId},
     method: 'get'
   })
 }

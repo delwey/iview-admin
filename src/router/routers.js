@@ -214,25 +214,16 @@ export default [
     path: '/multilevel',
     name: 'multilevel',
     meta: {
-      icon: 'md-menu',
-      title: '多级菜单'
+      icon: 'md-construct',
+      title: '权限管理'
     },
     component: Main,
     children: [
       {
-        path: 'resources',
-        name: 'resources',
-        meta: {
-          icon: 'person-stalker',
-          title: '菜单管理'
-        },
-        component: () => import('@/view/acl/resource/resources.vue')
-      },
-      {
         path: 'users',
         name: 'users',
         meta: {
-          icon: 'person-stalker',
+          icon: 'md-person',
           title: '用户管理'
         },
         component: () => import('@/view/acl/user/users.vue')
@@ -241,52 +232,38 @@ export default [
         path: 'user-info',
         name: 'user-info',
         meta: {
-          icon: 'person-stalker',
           title: '用户详情',
           hideInMenu: true
         },
         component: () => import('@/view/acl/user/user-info.vue')
       }, 
       {
-        path: 'level_2_1',
-        name: 'level_2_1',
+        path: 'roles',
+        name: 'roles',
         meta: {
-          icon: 'md-funnel',
-          title: '二级-1'
+          icon: 'md-people',
+          title: '角色管理'
         },
-        component: () => import('@/view/multilevel/level-2-1.vue')
+        component: () => import('@/view/acl/role/roles.vue')
       },
       {
-        path: 'level_2_2',
-        name: 'level_2_2',
+        path: 'role-info',
+        name: 'role-info',
         meta: {
-          access: ['super_admin'],
-          icon: 'md-funnel',
-          showAlways: true,
-          title: '二级-2'
+          title: '角色详情',
+          hideInMenu: true
         },
-        component: parentView,
-        children: [
-          {
-            path: 'level_2_2_1',
-            name: 'level_2_2_1',
-            meta: {
-              icon: 'md-funnel',
-              title: '三级'
-            },
-            component: () => import('@/view/multilevel/level-2-2/level-3-1.vue')
-          }
-        ]
-      },
+        component: () => import('@/view/acl/role/role-info.vue')
+      }, 
       {
-        path: 'level_2_3',
-        name: 'level_2_3',
+        path: 'resources',
+        name: 'resources',
         meta: {
-          icon: 'md-funnel',
-          title: '二级-3'
+          icon: 'md-menu',
+          title: '菜单管理'
         },
-        component: () => import('@/view/multilevel/level-2-3.vue')
-      },
+        component: () => import('@/view/acl/resource/resources.vue')
+      }
     ]
   },
   {

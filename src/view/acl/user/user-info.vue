@@ -3,14 +3,28 @@
     <Row :gutter="16">
       <Col offset="6" span="12">
       <Form ref="formData" :model="formData" :rules="ruleValidate" :label-width="80">
-        <FormItem label="名称" prop="name">
+        <FormItem label="用户名称" prop="name">
           <Input v-model="formData.name" placeholder="请输入名称"></Input>
         </FormItem>
         <FormItem label="邮箱" prop="email">
           <Input v-model="formData.email" placeholder="请输入邮箱"></Input>
         </FormItem>
+        <FormItem label="Password" prop="password">
+            <Input type="password" v-model="formData.password" placeholder="请输入密码"></Input>
+        </FormItem>
         <FormItem label="手机" prop="mobile">
           <Input v-model="formData.mobile"></Input>
+        </FormItem>
+        <FormItem label="Radio">
+          <RadioGroup v-model="formData.sex">
+            <Radio label="1">男</Radio>
+            <Radio label="2">女</Radio>
+          </RadioGroup>
+        </FormItem>
+        <FormItem label="Radio">
+          <Select v-model="formData.roleId">
+            <Option v-for="item in roleList" :value="item.roleId" :key="item.roleId">{{ item.name }}</Option>
+          </Select>
         </FormItem>
 
         <FormItem>
@@ -26,6 +40,8 @@
 <script>
 
 import { getById, save } from '@/api/user'
+import { getAllRole } from '@/api/role'
+
 export default {
   data () {
     return {
@@ -33,25 +49,36 @@ export default {
         userId: '',
         name: '',
         email: '',
-        mobile: ''
+        sex: '1',
+        mobile: '',
+        password: '',
+        roleId: ''
       },
       ruleValidate: {
         name: [
           {
             required: true,
-            message: 'The name cannot be empty',
+            message: '名称不能为空',
             trigger: 'blur'
           }
         ],
         email: [
           {
             required: true,
-            message: 'Mailbox cannot be empty',
+            message: '邮箱不能为空',
             trigger: 'blur'
           },
-          { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
+          { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
+        ],
+        password: [
+          {
+            required: true,
+            message: '密码不能为空',
+            trigger: 'blur'
+          }
         ]
-      }
+      },
+      roleList: []
     }
   },
   methods: {
@@ -84,6 +111,12 @@ export default {
       } else {
         this.formData.userId = ''
       }
+      getAllRole()
+        .then(res => {
+          this.roleList = res.data
+        }).catch(err => {
+          console.log(err)
+        })
     }
   },
   created () {

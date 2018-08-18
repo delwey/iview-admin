@@ -2,7 +2,7 @@
   <div>
     <Row :gutter="16">
       <Col span="6">
-        <Input search enter-button placeholder="用户名查询" v-model="searchKey" @on-search="loadData" />
+        <Input search enter-button placeholder="角色名查询" v-model="searchKey" @on-search="loadData" />
       </Col>
       <Col span="18">
         <Button type="primary" @click="handleAdd">添加</Button>
@@ -10,7 +10,7 @@
     </Row>
     <Row>
       <Col span="24">
-        <Table border stripe :columns="columns7" :data="pages.rows"></Table>
+        <Table border stripe :columns="roleCols" :data="pages.rows"></Table>
       </Col>
     </Row>
     <Row>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { getList, remove } from '@/api/user'
+import { getList, remove } from '@/api/role'
 
 export default {
   data () {
@@ -41,23 +41,22 @@ export default {
         rows: []
       },
       modal1: false,
-      columns7: [
+      roleCols: [
         {
           type: 'index',
           width: 60,
           align: 'center'
         },
         {
-          title: '登录邮箱',
-          key: 'email'
-        },
-        {
-          title: '用户名称',
+          title: '角色名称',
           key: 'name'
         },
         {
-          title: '手机号',
-          key: 'mobile'
+          title: '状态',
+          key: 'usable',
+          render: (h, params) => {
+            return h('div', params.row.usable === '0' ? '正常' : '挂起')
+          }
         },
         {
           title: 'Action',
@@ -108,22 +107,22 @@ export default {
   methods: {
     handleAdd () {
       this.$router.push({
-        path: 'user-info',
-        query: { userId: '' }
+        path: 'role-info',
+        query: { roleId: '' }
       })
     },
     handleEdit (index) {
       this.$router.push({
-        path: 'user-info',
-        query: { userId: this.pages.rows[index].userId }
+        path: 'role-info',
+        query: { roleId: this.pages.rows[index].roleId }
       })
     },
     handleRemove (index) {
       this.$Modal.confirm({
         title: '确认',
-        content: '删除用户？',
+        content: '删除角色？',
         onOk: () => {
-          let id = this.pages.rows[index].userId
+          let id = this.pages.rows[index].roleId
           remove(id).then(res => {
             this.$Message.info(res.msg)
             this.pages.rows.splice(index, 1)
